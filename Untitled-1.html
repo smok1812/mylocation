@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Ваши координаты</h2>
+<p id="location">Нажмите кнопку, чтобы получить координаты.</p>
+
+<button onclick="getLocation()">Получить координаты</button>
+
+<script>
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
+  } else {
+    document.getElementById("location").innerHTML = "Геолокация не поддерживается вашим браузером.";
+  }
+}
+
+function showPosition(position) {
+  var lat = position.coords.latitude;
+  var lon = position.coords.longitude;
+  document.getElementById("location").innerHTML = "Широта: " + lat + "<br>Долгота: " + lon;
+}
+
+function showError(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED:
+      document.getElementById("location").innerHTML = "Пользователь отклонил запрос на геолокацию."
+      break;
+    case error.POSITION_UNAVAILABLE:
+      document.getElementById("location").innerHTML = "Информация о местоположении недоступна."
+      break;
+    case error.TIMEOUT:
+      document.getElementById("location").innerHTML = "Запрос на получение местоположения пользователя превысил время ожидания."
+      break;
+    case error.UNKNOWN_ERROR:
+      document.getElementById("location").innerHTML = "Произошла неизвестная ошибка."
+      break;
+  }
+}
+</script>
+
+</body>
+</html>
